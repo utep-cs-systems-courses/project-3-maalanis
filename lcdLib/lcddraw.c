@@ -115,3 +115,10 @@ void drawRectOutline(u_char colMin, u_char rowMin, u_char width, u_char height,
   fillRectangle(colMin + width, rowMin, 1, height, colorBGR);
 }
 
+// Draw custom star shape
+void drawshape()
+{
+
+
+
+}
