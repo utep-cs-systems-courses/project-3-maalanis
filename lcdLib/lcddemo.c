@@ -27,31 +27,6 @@ main()
     x++;
   }
 
+  drawStar();
 
-  //CODE FOR STAR
-  
-  for(int i = 150; i> 140; i--){
-    drawPixel(60, i, COLOR_GREEN);
-  }
-  for(int i = 160; i> 150; i--) {
-    drawPixel(60, i, COLOR_GREEN);
-  }
-  for(int i = 50; i<70; i++) {
-    drawPixel(i, 150, COLOR_GREEN);
-
-  }
-
-  int sum = 1;
-  for(int i = 0; i< 20; i++){
-    drawPixel(50+sum, 140+sum, COLOR_GREEN);
-    sum++;
-  }
-
-  sum = 1;
-  for(int i = 0; i<20; i++){
-    drawPixel(70-sum, 140+sum, COLOR_GREEN);
-    sum ++;
-  }
- 
-  
 }
