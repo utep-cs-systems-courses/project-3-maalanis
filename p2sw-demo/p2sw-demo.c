@@ -6,7 +6,7 @@
 #include <lcdutils.h>
 #include <lcddraw.h>
 #include <p2switches.h>
-
+#include <lcddraw.h>
 
 /** Initializes everything, clears the screen, draws "hello" and the circle */
 void main()
@@ -20,6 +20,7 @@ void main()
   clearScreen(COLOR_BLUE);
 
   drawString5x7(10,10, "switches:", COLOR_GREEN, COLOR_BLUE);
+  drawStar(45,60);
   while (1) {
     u_int switches = p2sw_read(), i;
     char str[5];
