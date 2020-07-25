@@ -126,7 +126,7 @@ void drawStar(u_char col, u_char row)
   for( int i = 0; i<10; i++){
     drawPixel(col, row+i, COLOR_GREEN);
   }
-  for(int i=0; i<10; i++){
+  for(int i=0; i<10; i++)
     drawPixel(col-i, row, COLOR_GREEN);
   }
   for(int i =0; i< 10; i++){
@@ -136,7 +136,7 @@ void drawStar(u_char col, u_char row)
     drawPixel(col+i, row+i, COLOR_GREEN);
   }
   for(int i =0; i<10; i++){
-    drawPixel(col-1, row-1,COLOR_GREEN);
+    drawPixel(col-i, row-i,COLOR_GREEN);
   }
   for(int i =0; i<10; i++){
     drawPixel(col-i, row+i, COLOR_GREEN);

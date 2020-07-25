@@ -19,12 +19,8 @@ void main()
 
   clearScreen(COLOR_BLUE);
 
-  drawString5x7(10,10, "poison:", COLOR_GREEN, COLOR_BLUE);
-  drawStar(20,50);
-  drawStar(20, 140);
-  drawStar(110, 50);
-  drawStar(110, 140);
-  drawStar(65,95);
+  drawString5x7(10,10, "switches:", COLOR_GREEN, COLOR_BLUE);
+  drawStar();
   while (1) {
     u_int switches = p2sw_read(), i;
     char str[5];

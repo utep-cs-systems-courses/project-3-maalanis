@@ -1,4 +1,3 @@
-
 /** \file lcddraw.c
  *  \brief Adapted from RobG's EduKit
  */
@@ -40,8 +39,7 @@ void fillRectangle(u_char colMin, u_char rowMin, u_char width, u_char height,
 }
 
 /** Clear screen (fill with color)
- *  
- *  \param colorBGR The color to fill screen
+ *   *  \param colorBGR The color to fill screen
  */
 void clearScreen(u_int colorBGR) 
 {
@@ -112,38 +110,36 @@ void drawRectOutline(u_char colMin, u_char rowMin, u_char width, u_char height,
   fillRectangle(colMin, rowMin, width, 1, colorBGR);
   fillRectangle(colMin, rowMin + height, width, 1, colorBGR);
 
-
   /**< left & right */
   fillRectangle(colMin, rowMin, 1, height, colorBGR);
   fillRectangle(colMin + width, rowMin, 1, height, colorBGR);
 }
 
 // Draw custom star shape
-void drawStar(u_char col, u_char row)
+void drawStar()
 {
-  for( int i = 0; i<10; i++){
-    drawPixel(col, row-i, COLOR_GREEN);
+  for( int i = 75; i>65; i--){
+    drawPixel(60, i, COLOR_GREEN);
   }
-  for( int i = 0; i<10; i++){
-    drawPixel(col, row+i, COLOR_GREEN);
+
+  for(int i = 85; i> 75; i--){
+    drawPixel(60, i, COLOR_GREEN);
   }
-  for(int i=0; i<10; i++)
-    drawPixel(col-i, row, COLOR_GREEN);
+
+  for(int i =50; i< 70; i++){
+    drawPixel(i, 75, COLOR_GREEN);
   }
-  for(int i =0; i< 10; i++){
-    drawPixel(col+i, row, COLOR_GREEN);
+  int sum =1;
+  for(int i = 0; i< 20; i++){
+    drawPixel(50+sum, 65+sum, COLOR_GREEN);
+    sum++;
   }
-  for(int i =0; i<10; i++){
-    drawPixel(col+i, row+i, COLOR_GREEN);
+  sum=1;
+  for( int i =0;i < 20; i++){
+    drawPixel(70-sum, 65+sum, COLOR_GREEN);
+    sum++;
   }
-  for(int i =0; i<10; i++){
-    drawPixel(col-i, row-i, COLOR_GREEN);
-  }
-  for(int i =0; i<10; i++){
-    drawPixel(col-i, row+i, COLOR_GREEN);
-  }
-  for(int i =0; i< 10; i++){
-    drawPixel(col+i, row-i, COLOR_GREEN);
-  }
+  
+
   
 }

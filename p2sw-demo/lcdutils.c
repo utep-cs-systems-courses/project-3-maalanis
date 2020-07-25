@@ -105,8 +105,8 @@ void _writeCommand(u_char command)
   while (UCB0STAT & UCBUSY);	/**< wait for previous transfer to complete */
   LCD_DC_LO();			          /**< specify sending a command */
   UCB0TXBUF = command;		    /**< send command */
-}
 
+}
 /** Long delay (private) */
 void _delay(u_char x10ms) {
 	while (x10ms > 0) {
