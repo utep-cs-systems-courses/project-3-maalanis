@@ -94,7 +94,7 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
   int row, col;
   MovLayer *movLayer;
 
-  and_sr(8);
+  and_sr(~8);
   for(movLayer= movLayers; movLayer; movLayer = movLayer->next){
     Layer *l = movLayer->layer;
     l->posLast = l->pos;
@@ -163,7 +163,7 @@ main()
   or_sr(0x8);
   for(;;){
     while(!redrawScreen) {
-      P1OUT &= GREEN_LED;
+      P1OUT &= ~GREEN_LED;
       or_sr(0x10);
     }
     P1OUT |= GREEN_LED;
@@ -181,7 +181,7 @@ void wdt_c_handler() {
       redrawScreen = 1;
     count =0;
   }
-  P1OUT &= GREEN_LED;
+  P1OUT &= ~GREEN_LED;
     
   }
 
