@@ -122,8 +122,8 @@ main()
   layerInit(&layer0);
   layerDraw(&layer0);
 
- 
   layerGetBounds(&fieldLayer, &fieldFence);
+  
   enableWDTInterrupts();
   or_sr(0x8);
   
