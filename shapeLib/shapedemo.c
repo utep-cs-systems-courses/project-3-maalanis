@@ -23,8 +23,6 @@ Layer layer1 = {
   0
 };
 
-
-
 Layer fieldLayer = {
   (AbShape *) &fieldOutline,
   {(screenWidth/2),screenHeight/2},
@@ -32,12 +30,7 @@ Layer fieldLayer = {
   COLOR_RED,
   &layer1,
 };
-/*
-Layer layer1 = {
-  (AbShape *&cicle8,
-   ((screenW
-};
-*/
+
 Layer layer0 ={
   (AbShape *)&rect10,
   {(screenWidth/2)+10, (screenHeight/2)+5},
@@ -45,22 +38,7 @@ Layer layer0 ={
   COLOR_BLACK,
   &fieldLayer,
 };
-void abDrawPos(AbShape *shape, Vec2 *shapeCenter, u_int fg_color, u_int bg_color)
-{
-  u_char row, col;
-  Region bounds;
-  abShapeGetBounds(shape, shapeCenter, &bounds);
-  lcd_setArea(bounds.topLeft.axes[0], bounds.topLeft.axes[1],
-	      bounds.botRight.axes[0]-1, bounds.botRight.axes[1]-1);
-  for (row = bounds.topLeft.axes[1]; row < bounds.botRight.axes[1]; row++) {
-    for (col = bounds.topLeft.axes[0]; col < bounds.botRight.axes[0]; col++) {
-      Vec2 pixelPos = {col, row};
-      int color = abShapeCheck(shape, shapeCenter, &pixelPos) ?
-	fg_color : bg_color;
-      lcd_writeColor(color);
-    }
-}
-}
+
 typedef struct MovLayer_s {
   Layer *layer;
   Vec2 velocity;
@@ -124,14 +102,9 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
     }
   }
 }
-
-
 u_int bgColor = COLOR_BLUE;
 int redrawScreen = 1;
-
 Region fieldFence;
-
-
 
 int
 main()
@@ -149,18 +122,11 @@ main()
   layerInit(&layer0);
   layerDraw(&layer0);
 
-  
-  
+ 
   layerGetBounds(&fieldLayer, &fieldFence);
-  Vec2 rectPos = screenCenter;
-
-  //clearScreen(COLOR_BLUE);
-   drawString5x7(20,20, "hello", COLOR_GREEN, COLOR_RED);
-  //shapeInit();
-  // drawPixel(screenCenter.axes[1], screenCenter.axes[0], COLOR_BLACK);
-  //abDrawPos((AbShape*)&rect10, &rectPos, COLOR_ORANGE, COLOR_BLUE);
   enableWDTInterrupts();
   or_sr(0x8);
+  
   for(;;){
     while(!redrawScreen) {
       P1OUT &= ~GREEN_LED;
@@ -175,7 +141,7 @@ void wdt_c_handler() {
   static short count = 0;
   P1OUT |= GREEN_LED;
   count ++;
-  if(count == 15) {
+  if(count == 1500) {
     mlAdvance(&ml0, &fieldFence);
     if(p2sw_read())
       redrawScreen = 1;
