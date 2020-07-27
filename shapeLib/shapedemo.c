@@ -95,6 +95,13 @@ void movLayerDraw(MovLayer *movLayers, Layer *layers)
   MovLayer *movLayer;
 
   and_sr(8);
+  for(movLayer= movLayers; movLayer; movLayer = movLayer->next){
+    Layer *l = movLayer->layer;
+    l->posLast = l->pos;
+    l->pos= l->posNext;
+  }
+  or_sr(8);
+  
   for(movLayer = movLayers; movLayer; movLayer = movLayer->next) {
     Region bounds;
     layerGetBounds(movLayer->layer, &bounds);
@@ -153,6 +160,7 @@ main()
   // drawPixel(screenCenter.axes[1], screenCenter.axes[0], COLOR_BLACK);
   //abDrawPos((AbShape*)&rect10, &rectPos, COLOR_ORANGE, COLOR_BLUE);
   enableWDTInterrupts();
+  or_sr(0x8);
   for(;;){
     while(!redrawScreen) {
       P1OUT &= GREEN_LED;
