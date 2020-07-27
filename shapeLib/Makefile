@@ -9,10 +9,12 @@ CC              = msp430-elf-gcc
 AS              = msp430-elf-as
 AR              = msp430-elf-ar
 
-OBJECTS         = shape.o region.o rect.o vec2.o layer.o rarrow.o    
+OBJECTS         = shape.o region.o rect.o vec2.o layer.o rarrow.o
+
 
 libShape.a: $(OBJECTS)
 	$(AR) crs $@ $^
+
 
 $(OBJECTS): shape.h 
 
@@ -24,10 +26,10 @@ install: libShape.a
 clean:
 	rm -f libShape.a *.o *.elf
 
-wdt_handler.o: wdt_handler.s wdt_handler.o
+wdt_handler.elf: wdt_handler.s wdt_handler.o
+	$(CC) $(CFLAGS) ${LDFLAGS} $^ -L../lib -lTimer
 
-
-shapedemo.elf: shapedemo.o libShape.a wdt_handler.o 
+shapedemo.elf: shapedemo.o libShape.a wdt_handler.elf  
 	$(CC) $(CFLAGS) ${LDFLAGS} $^ -L../lib -lTimer -lLcd -lShape -lp2sw -lCircle -o $@
 
 shapedemo2.elf: shapedemo2.o libShape.a 
@@ -36,7 +38,7 @@ shapedemo2.elf: shapedemo2.o libShape.a
 shapedemo3.elf: shapedemo3.o libShape.a 
 	$(CC) $(CFLAGS) ${LDFLAGS} $^ -L../lib -lTimer -lLcd -o $@
 
-load: shapedemo.elf
+load: shapedemo.elf wdt_handler.elf
 	msp430loader.sh $^
 
 load2: shapedemo2.elf

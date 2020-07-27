@@ -124,9 +124,9 @@ main()
 
   layerGetBounds(&fieldLayer, &fieldFence);
   
-  enableWDTInterrupts();
+     enableWDTInterrupts();
   or_sr(0x8);
-  
+    
   for(;;){
     while(!redrawScreen) {
       P1OUT &= ~GREEN_LED;
@@ -136,12 +136,13 @@ main()
     redrawScreen = 0;
     movLayerDraw(&ml0, &layer0);
   }
+  
 }
 void wdt_c_handler() {
   static short count = 0;
   P1OUT |= GREEN_LED;
   count ++;
-  if(count == 1500) {
+  if(count == 15) {
     mlAdvance(&ml0, &fieldFence);
     if(p2sw_read())
       redrawScreen = 1;
