@@ -3,10 +3,13 @@
 #include "lcdutils.h"
 #include "lcddraw.h"
 #include "shape.h"
-#include "p2switches.h"
+//#include "p2switches.h"
 #include "abCircle.h"
+#include "buzzer.h"
+#include "switches.h"
 
 const AbRect rect10 = {abRectGetBounds, abRectCheck, 10,10};
+const AbStar star = {abStarGetBounds, abStarCheck, 10,10};
 
 #define GREEN_LED BIT6
 
@@ -15,12 +18,20 @@ AbRectOutline fieldOutline = {
   {screenWidth/2-10, screenHeight/2-10}
 };
 
+Layer layer2 = {
+  (AbShape *) &star,
+  {(screenWidth/2), (screenHeight/2) +10},
+  {0,0}, {0,0},
+  COLOR_GREEN,
+  0
+};
+
 Layer layer1 = {
   (AbShape *) &circle8,
   {(screenWidth/2)-5, (screenHeight/2)+10},
   {0,0}, {0,0},
   COLOR_YELLOW,
-  0
+  &layer2
 };
 
 Layer fieldLayer = {
@@ -45,7 +56,8 @@ typedef struct MovLayer_s {
   struct MovLayer_s *next;
 } MovLayer;
 
-MovLayer ml1 = {&layer1, {2,2}, 0};
+MovLayer ml2 = {&layer2, {3,3}, 0};
+MovLayer ml1 = {&layer1, {2,2}, &ml2};
 MovLayer ml0 = {&layer0, {2,2}, &ml1};
 
 void mlAdvance(MovLayer *ml, Region *fence)
@@ -114,19 +126,19 @@ main()
   P1OUT |= GREEN_LED;
   configureClocks();
   lcd_init();
-  p2sw_init(1);
+  //p2sw_init(1);
   shapeInit();
-
+  switch_init();
   shapeInit();
-  
+  buzzer_init();
   layerInit(&layer0);
   layerDraw(&layer0);
-
+  
   layerGetBounds(&fieldLayer, &fieldFence);
   
      enableWDTInterrupts();
-  or_sr(0x8);
-    
+     or_sr(0x8);
+  /*    
   for(;;){
     while(!redrawScreen) {
       P1OUT &= ~GREEN_LED;
@@ -134,18 +146,19 @@ main()
     }
     P1OUT |= GREEN_LED;
     redrawScreen = 0;
-    movLayerDraw(&ml0, &layer0);
+    // movLayerDraw(&ml0, &layer0);
   }
-  
+  */
 }
 void wdt_c_handler() {
+  //  buzzer_set_period(1000);
   static short count = 0;
   P1OUT |= GREEN_LED;
   count ++;
   if(count == 15) {
     mlAdvance(&ml0, &fieldFence);
-    if(p2sw_read())
-      redrawScreen = 1;
+    //if(p2sw_read())
+    //redrawScreen = 1;
     count =0;
   }
   P1OUT &= ~GREEN_LED;
